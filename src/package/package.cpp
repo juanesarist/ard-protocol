@@ -1,5 +1,4 @@
 #include "package.h"
-#include "exception.h"
 
 Package::Package(uint8_t size) {
     this->size = size;
@@ -7,21 +6,21 @@ Package::Package(uint8_t size) {
     this->index = 0;
 }
 
+Package::Package(uint8_t* payload, uint8_t size) {
+   this->size = size;
+   this->buffer = payload;
+   this->index = size;
+}
+
 void Package::loads(uint8_t* payload, uint8_t size){
+    if (size % 3) {return;}
     for (int i=0; i<size; i+=3) {
-        try {
-            this->addData(payload[i], payload[i+1], payload[i+2]);
-        } 
-        catch(...) {
-            throw Exception(package_error::INVALID_PAYLOAD);
-        }
+        this->addData(payload[i], payload[i+1], payload[i+2]);
     }
 }
 
 void Package::addData(uint8_t key, uint8_t msb, uint8_t lsb) {
-    if(this->index > (this->size - 3)){
-        throw Exception(package_error::FULL);
-    }
+    if(this->index > (this->size - 3)){return;}
     this->buffer[this->index] = key; this->index++;
     this->buffer[this->index] = msb; this->index++;
     this->buffer[this->index] = lsb; this->index++;    
@@ -48,9 +47,6 @@ bool Package::hasValue(uint8_t key) {
 
 uint16_t Package::getValue(uint8_t key) {
     int index = this->findValueIndex(key);
-    if (index == -1) {
-        throw Exception(package_error::NOT_FOUND);
-    }
     return (this->buffer[index+1] << 8) | (this->buffer[index + 2]);
 }
 
