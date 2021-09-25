@@ -3,16 +3,10 @@
 
 #include <stdint.h>
 
-namespace package_error {
-    static const int FULL = 1;
-    static const int EMPTY = 2;
-    static const int NOT_FOUND = 3;
-    static const int INVALID_PAYLOAD = 4;
-};
-
 class Package {
     public:
         Package(uint8_t size);
+        Package(uint8_t* payload, uint8_t size);
         void loads(uint8_t* payload, uint8_t size);
         void addData(uint8_t key, uint16_t data);
         void addData(uint8_t index, uint8_t msb, uint8_t lsb);

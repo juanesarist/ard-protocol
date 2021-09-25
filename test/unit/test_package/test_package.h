@@ -45,4 +45,8 @@ void test_function_package(void) {
     for(int i=0; i<0; i++){
         TEST_ASSERT_EQUAL(data[i], i);
     }
+
+    Package second_package = Package(payload, 3);
+    TEST_ASSERT_EQUAL(second_package.getSize(), 3);
+    TEST_ASSERT_EQUAL(second_package.getValue(0), (1 << 8 | 2));
 }
