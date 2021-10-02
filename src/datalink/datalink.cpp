@@ -22,13 +22,14 @@ void Datalink::read(Stream &uart) {
             for(int i=0; i <(length - 1); i++){
                 local_checksum += buffer[i];
             }
+            // Serial.println()
             if(byte(0xFF - local_checksum) == buffer[length - 1]){
                 for(int i = 0; i < (length - 1) ; i++) {
                     this->buffer[this->index+i] = buffer[i];
                 }
                 this->index += length - 1;
                 this->in_waiting = true;
-                uart.println(this->index);
+                //uart.println(this->index);
             }
         } 
     }

@@ -62,6 +62,10 @@ uint8_t* Package::dump() {
     return payload;
 }
 
+uint8_t* Package::getBuffer(){
+    return this->buffer;
+}
+
 uint8_t Package::getIndex(){
     return this->index;
 }
