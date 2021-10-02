@@ -39,7 +39,7 @@ Package dataParser(Datalink link, Stream &uart)
 void loop()
 {
     pot = analogRead(A0);
-    valor = map(pot, 0, 1023, 0, 255);
+    valor = map(pot, 0, 1023, 0, 254);
     Package pack = dataParser(datalink, Serial);
     dispatcher.dispatch(pack);
     if (pack.getSize() != 0)
@@ -47,7 +47,7 @@ void loop()
         if (pack.getBuffer()[0] == 0x01)
         {
             Package output = Package(3);
-            output.addData(0x01, pot);
+            output.addData(0x01, valor);
             datalink.send(output.dump(), output.getSize(), Serial);
         }
     }

@@ -12,7 +12,7 @@ void Dispatcher::rojo(int led, Package pack)
     uint8_t data = pack.getBuffer()[1];
     if (data == 0x00)
     {
-        analogWrite(led, LOW);
+        digitalWrite(led, LOW);
     }
     if (data == 0x01)
     {
@@ -23,9 +23,9 @@ void Dispatcher::rojo(int led, Package pack)
 void Dispatcher::rgb(Package pack)
 {
     uint8_t* data = pack.getBuffer();
-    analogWrite(9, data[1]);
+    analogWrite(9, data[3]);
     analogWrite(10, data[2]);
-    analogWrite(11, data[3]);
+    analogWrite(11, data[1]);
 }
 
 
